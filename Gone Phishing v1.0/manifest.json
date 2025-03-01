@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Phishing Detector",
+  "version": "1.2",
+  "description": "Detects phishing websites using NLP & URL analysis.",
+  "permissions": ["storage", "webNavigation", "scripting", "notifications", "alarms"],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "icons": {
+    "128": "icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
