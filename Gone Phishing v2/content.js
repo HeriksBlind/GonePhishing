@@ -12,35 +12,58 @@ const phishingKeywords = [
     "confirm here"
 ];
 
-// Function to scan and highlight only the phishing text
-function scanEmailContent() {
-    console.log("Scanning Gmail emails for phishing threats...");
+// Function to highlight entire email row
+function highlightEmailRow(row) {
+    row.classList.add("phishing-alert");
+}
 
-    let emailElements = document.querySelectorAll("div[role='listitem'], div[role='article'], span, div");
+// Function to scan and highlight Gmail inbox rows (only when triggered)
+function scanGmailInbox() {
+    try {
+        console.log("Scanning Gmail inbox for phishing threats...");
 
-    emailElements.forEach((el) => {
-        let text = el.innerHTML; // Get the inner HTML content
+        let emailRows = document.querySelectorAll("tr"); // Gmail uses <tr> for email rows
 
-        phishingKeywords.forEach((keyword) => {
-            let regex = new RegExp(`(${keyword})`, "gi"); // Case-insensitive search
-            text = text.replace(regex, `<span style="background-color: yellow; font-weight: bold;">$1</span>`);
+        emailRows.forEach((row) => {
+            if (row.classList.contains("phishing-alert")) {
+                return; // Skip already highlighted rows
+            }
+
+            let emailText = row.innerText.toLowerCase(); // Get text inside row
+
+            phishingKeywords.forEach((keyword) => {
+                if (emailText.includes(keyword.toLowerCase())) {
+                    console.log(`Phishing keyword detected: "${keyword}" in email.`);
+                    highlightEmailRow(row);
+                }
+            });
         });
 
-        el.innerHTML = text; // Update the content with highlighted text
-    });
+    } catch (error) {
+        console.error("Error scanning Gmail inbox:", error);
+    }
 }
 
-// Observe Gmail changes for dynamically loaded content
-function observeGmailChanges() {
-    const observer = new MutationObserver(() => {
-        scanEmailContent();
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
+// Inject styles to highlight entire row
+function injectStyles() {
+    let style = document.createElement("style");
+    style.innerHTML = `
+        .phishing-alert {
+            background-color: #ffcccc !important; /* Light red background */
+            font-weight: bold !important;
+        }
+    `;
+    document.head.appendChild(style);
 }
 
-// Initial scan and start observing changes
-setTimeout(() => {
-    scanEmailContent();
-    observeGmailChanges();
-}, 5000);
+// Listen for messages from popup.js
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.action === "scanEmails") {
+        console.log("Received scan trigger from popup.js");
+        scanGmailInbox(); // Run scan only when triggered
+        sendResponse({ status: "Scanning started" });
+    }
+});
+
+// Inject styles immediately
+injectStyles();
