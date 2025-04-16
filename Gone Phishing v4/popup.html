@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Gone Phishing</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="popup-container" id="themeWrapper">
+        <div class="header">
+            <img src="shield-icon.png" alt="Shield Icon" class="logo">
+            <button id="themeToggle">🌓</button>
+        </div>
+
+        <h2 class="popup-title">Go Phishing</h2>
+        <p class="popup-subtitle">Scan your inbox for threats</p>
+
+        <button id="scanBtn">Scan Emails</button>
+
+        <div id="loading" class="loader" hidden></div>
+        <p id="statusMessage"></p>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

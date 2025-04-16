@@ -1,0 +1,116 @@
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333;
+    --subtext-color: #666;
+    --button-bg: #1a73e8;
+    --button-hover: #155ec5;
+    --safe-color: #4caf50;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+body.dark {
+    --bg-color: #1f1f1f;
+    --text-color: #f0f0f0;
+    --subtext-color: #aaa;
+    --button-bg: #2b7bff;
+    --button-hover: #1a5edb;
+    --safe-color: #81c784;
+    --shadow: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    margin: 0;
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* Popup Container */
+.popup-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 300px;
+    padding: 24px;
+    background-color: var(--bg-color);
+    text-align: center;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px var(--shadow);
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    width: 32px;
+    height: 32px;
+}
+
+#themeToggle {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+/* Title */
+.popup-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-color);
+}
+
+/* Subtitle */
+.popup-subtitle {
+    font-size: 13px;
+    color: var(--subtext-color);
+    margin-bottom: 20px;
+}
+
+/* Scan Button */
+#scanBtn {
+    background-color: var(--button-bg);
+    color: white;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+#scanBtn:hover {
+    background-color: var(--button-hover);
+}
+
+#scanBtn:active {
+    transform: scale(0.98);
+}
+
+/* Loader */
+.loader {
+    margin: 16px auto 0;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--button-bg);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Status Message */
+#statusMessage {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--safe-color);
+}
